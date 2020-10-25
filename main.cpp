@@ -9,13 +9,7 @@ int main(int argc, char *argv[])
 
     FenPrincipale fenetrePrincipale;
 
-//    FenCodeGenere* fenCodeGenere = new FenCodeGenere;
-
-//  FenCodeGenere fenCodeGenere;
-
     fenetrePrincipale.show();
-
-// fenCodeGenere.exec();
 
     return app.exec();
 }

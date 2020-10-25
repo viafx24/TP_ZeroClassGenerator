@@ -16,6 +16,8 @@
 
 #include <QPushButton>
 #include <QGridLayout>
+#include <QMessageBox>
+#include <QDate>
 
 #include <FenCodeGenere.h>
 
@@ -27,9 +29,9 @@ class FenPrincipale : public QWidget // On hérite de QWidget (IMPORTANT)
     FenPrincipale();
 
 
-public slots:
-  void   Guillaume_slot();
-//  void   Guillaume_slot();
+    private slots:
+        void   Guillaume_slot();
+
 
     private:
     QLineEdit *nom;
@@ -38,6 +40,12 @@ public slots:
     QLineEdit *auteur;
     QDateEdit *dateCreation= new QDateEdit;
     QTextEdit *comment = new QTextEdit;
+
+    QCheckBox *qck1;
+    QCheckBox *qck2;
+    QCheckBox *qck3;
+
+    QGroupBox *groupBox_3;
 
 };
 

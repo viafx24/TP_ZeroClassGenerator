@@ -3,17 +3,18 @@
 
 FenPrincipale::FenPrincipale() : QWidget()
 {
-
-
     // première partie
+    nom = new QLineEdit;
+    classeMere = new QLineEdit;
+//    QLineEdit *nom = new QLineEdit;
+//    nom->setText("Entrez votre nom ici");
+//    QString contenu = nom->text();
 
-    QLineEdit *nom = new QLineEdit;
-    QLineEdit *classeMere= new QLineEdit;
+//    QLineEdit *classeMere= new QLineEdit;
 
     QFormLayout *layout_2 = new QFormLayout;
     layout_2->addRow("Nom", nom);
     layout_2->addRow("Classe mère", classeMere);
-
 
      QGroupBox *groupBox = new QGroupBox(tr("Définition de la classe"));
      groupBox->setLayout(layout_2);
@@ -34,35 +35,31 @@ FenPrincipale::FenPrincipale() : QWidget()
      QGroupBox *groupBox_2 = new QGroupBox(tr("Options"));
      groupBox_2->setLayout(layout_3);
 
-
      // troisième Partie
 
-     QLineEdit *auteur = new QLineEdit;
-     QDateEdit *dateCreation= new QDateEdit;
-     QTextEdit *comment = new QTextEdit;
+     auteur = new QLineEdit;
+     dateCreation= new QDateEdit;
+     dateCreation->setDate(QDate::currentDate());
+     comment = new QTextEdit;
 
      QFormLayout *layout_4 = new QFormLayout;
      layout_4->addRow("Auteur", auteur);
      layout_4->addRow("Date de création:", dateCreation);
      layout_4->addRow("Rôle de la classe:", comment);
 
-     QGroupBox *groupBox_3 = new QGroupBox(tr("Ajouter des commentaires"));
+     groupBox_3 = new QGroupBox(tr("Ajouter des commentaires"));
      groupBox_3->setLayout(layout_4);
      groupBox_3->setCheckable(true);
      groupBox_3->setChecked(false);
-
 
      // quatrième partie
 
      QPushButton *bouton1 = new QPushButton("Générer !");
      QPushButton *bouton2 = new QPushButton("Quitter");
 
-
      QHBoxLayout *layout_5 = new QHBoxLayout;
      layout_5->addWidget(bouton1, Qt::AlignRight);
      layout_5->addWidget(bouton2, Qt::AlignRight);
-
-
 
      layout->addWidget(groupBox);
      layout->addWidget(groupBox_2);
@@ -75,16 +72,38 @@ FenPrincipale::FenPrincipale() : QWidget()
     QObject::connect(bouton2, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-//void FenPrincipale::Guillaume_slot(FenCodeGenere fenCodeGenere)
-//{
-//    fenCodeGenere.exec();
-//}
-
 void FenPrincipale::Guillaume_slot()
 {
-    FenCodeGenere fenCodeGenere;
+
+    // On vérifie que le nom de la classe n'est pas vide, sinon on arrête
+    if (nom->text().isEmpty())
+    {
+        QMessageBox::critical(this, "Erreur", "Veuillez entrer au moins un nom de classe");
+        return; // Arrêt de la méthode
+    }
+
+    QString code;
+    QString format="dd.MM.yyyy";
+
+    if (groupBox_3->isChecked())
+    {
+
+        code="/*\n";
+        code+= "Auteur : " + auteur->text() +"\n" ;
+        code+= "Date de création : " + dateCreation->date().toString() + "\n";
+        code+= comment->toPlainText() + "\n";
+        code+="*/\n\n\n";
+
+    }
+
+    //QString code=nom->text();
+
+
+ //   QString qString = nom->text();
+    FenCodeGenere fenCodeGenere(code);
+ //   fenCodeGenere.SetComment(test);
+
     fenCodeGenere.exec();
-   // close();
 }
 
 
