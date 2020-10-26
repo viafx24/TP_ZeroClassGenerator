@@ -23,9 +23,9 @@ FenPrincipale::FenPrincipale() : QWidget()
 
      //seconde partie
 
-     QCheckBox *qck1= new QCheckBox(tr("Protéger le header contre les inclusions multiples"));
-     QCheckBox *qck2= new QCheckBox(tr("Générer un constructeur par défaut"));
-     QCheckBox *qck3= new QCheckBox(tr("Générer un destructeur"));
+     qck1= new QCheckBox(tr("Protéger le header contre les inclusions multiples"));
+     qck2= new QCheckBox(tr("Générer un constructeur par défaut"));
+     qck3= new QCheckBox(tr("Générer un destructeur"));
 
      QVBoxLayout *layout_3 = new QVBoxLayout;
      layout_3->addWidget(qck1);
@@ -67,6 +67,10 @@ FenPrincipale::FenPrincipale() : QWidget()
      layout->addLayout(layout_5);
      this->setLayout(layout);
 
+     setWindowTitle("Zero Class Generator ");
+     setWindowIcon(QIcon("icone.png"));
+     resize(400, 450);
+
 
     QObject::connect(bouton1, SIGNAL(clicked()), this, SLOT(Guillaume_slot()));
     QObject::connect(bouton2, SIGNAL(clicked()), this, SLOT(close()));
@@ -95,12 +99,41 @@ void FenPrincipale::Guillaume_slot()
         code+="*/\n\n\n";
 
     }
+    if (qck1->isChecked())
+    {
+        code+="#ifndef HEADER_" + nom->text().toUpper() + "\n";
+        code+="#define HEADER_" + nom->text().toUpper() + "\n\n";
+    }
 
-    //QString code=nom->text();
 
+    if (!classeMere->text().isEmpty())
+    {
+        code+= "class " + nom->text();
+        code+= " : public " + classeMere->text() +"\n\n";
 
- //   QString qString = nom->text();
-    FenCodeGenere fenCodeGenere(code);
+    }
+    else
+    {
+        code+= "class " + nom->text() + "\n\n";
+
+    }
+    code+="{\n";
+    code+="     public:\n\n";
+    if (qck2->isChecked())
+    {
+        code+="          "+ nom->text() + "();\n\n";
+
+    }
+    if (qck3->isChecked())
+    {
+        code+="         ~" + nom->text() + "();\n\n";
+    }
+
+    code+="     protected:\n\n";
+    code+="     private:\n\n";
+    code+="};";
+
+    FenCodeGenere fenCodeGenere(code,this);
  //   fenCodeGenere.SetComment(test);
 
     fenCodeGenere.exec();

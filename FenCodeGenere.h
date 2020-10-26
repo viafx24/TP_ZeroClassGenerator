@@ -12,12 +12,8 @@
 class FenCodeGenere : public QDialog // On hérite de QWidget (IMPORTANT)
 {
 
-    Q_OBJECT
-
     public:
-    FenCodeGenere(QString &code);
-
-//   void SetComment(QString *qString);
+    FenCodeGenere(QString &code, QWidget *parent);
 
     private:
     QTextEdit *comment;

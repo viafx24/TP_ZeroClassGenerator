@@ -18,6 +18,7 @@
 #include <QGridLayout>
 #include <QMessageBox>
 #include <QDate>
+#include <QFont>
 
 #include <FenCodeGenere.h>
 
