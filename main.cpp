@@ -1,3 +1,6 @@
+//rien de bien particulier à dire ici, code de base d'un main pour lancer un GUI. A noter
+// seul la fenètre principale est généré dans le main.
+
 #include <QApplication>
 #include <QtWidgets>
 #include <FenPrincipale.h>

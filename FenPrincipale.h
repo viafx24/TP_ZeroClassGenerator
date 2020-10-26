@@ -1,6 +1,10 @@
 #ifndef FENPRINCIPALE_H
 #define FENPRINCIPALE_H
 
+
+// tous ces includes s'avèrent necessaire pour éviter d'avoir des erreurs detectés mais il est
+// possible que cela fonctionne avec le QWidget seul (ralentit la compile mais évite tous les includes
+
 #include <QApplication>
 #include <QWidget>
 #include <QDateEdit>
@@ -24,6 +28,8 @@
 
 class FenPrincipale : public QWidget // On hérite de QWidget (IMPORTANT)
 {
+
+    // commande necessaire si  on ajoute des slots
     Q_OBJECT
 
     public:
@@ -35,6 +41,12 @@ class FenPrincipale : public QWidget // On hérite de QWidget (IMPORTANT)
 
 
     private:
+
+    // attributs necessaire si on veut les utiliser ensuite dans les méthodes.
+    // attention ne pas les définir tel quel dans le constructeur sinon ca bug.
+    // dans le constructeur on fait : nom = new QLineEdit; mais je ne sais pas
+    // exactement pourquoi.
+
     QLineEdit *nom;
     QLineEdit *classeMere;
 

@@ -1,3 +1,8 @@
+// je n'ai pas bien nommé les widgets et layout et je ne commente pas trop le code
+// mais se rappeler que le fonctionnement des layout est trés userfriendly.
+// idem (relativement) pour le fonctionnement slot/signal.
+
+
 #include "FenPrincipale.h"
 #include "FenCodeGenere.h"
 
@@ -6,12 +11,13 @@ FenPrincipale::FenPrincipale() : QWidget()
     // première partie
     nom = new QLineEdit;
     classeMere = new QLineEdit;
-//    QLineEdit *nom = new QLineEdit;
-//    nom->setText("Entrez votre nom ici");
-//    QString contenu = nom->text();
 
+// ca c'est les lignes que j'avais écrit au debut et qui faisait bugger le code;
+// je ne sais pas exactement pourquoi
+//    QLineEdit *nom = new QLineEdit;
 //    QLineEdit *classeMere= new QLineEdit;
 
+// si on ajoute pas le truc dans les attributs alors on peut (doit?) écrire comme cela:
     QFormLayout *layout_2 = new QFormLayout;
     layout_2->addRow("Nom", nom);
     layout_2->addRow("Classe mère", classeMere);
@@ -67,10 +73,13 @@ FenPrincipale::FenPrincipale() : QWidget()
      layout->addLayout(layout_5);
      this->setLayout(layout);
 
+     // gestion du titre et ajout de l'icone. l'icone n'apparait que quand on lance l'executable.
+
      setWindowTitle("Zero Class Generator ");
      setWindowIcon(QIcon("icone.png"));
      resize(400, 450);
 
+// si il n'y a pas de type passé dans Signal, on ne peut pas en mettre dans slot.
 
     QObject::connect(bouton1, SIGNAL(clicked()), this, SLOT(Guillaume_slot()));
     QObject::connect(bouton2, SIGNAL(clicked()), this, SLOT(close()));
@@ -87,10 +96,16 @@ void FenPrincipale::Guillaume_slot()
     }
 
     QString code;
-    QString format="dd.MM.yyyy";
 
     if (groupBox_3->isChecked())
     {
+
+
+        // pour trouver le date().toString(), j'ai du regarder la correction
+        // sinon on passe des heures dans la doc a cherché la bonne méthode: l'aide
+        // à cause de l'héritage et du manque d'exemple reste trés lourde.
+        // trouver le bon attribut ou la bonne méthode est chronophage et souvent
+        // peu intuitif.
 
         code="/*\n";
         code+= "Auteur : " + auteur->text() +"\n" ;
@@ -133,10 +148,15 @@ void FenPrincipale::Guillaume_slot()
     code+="     private:\n\n";
     code+="};";
 
-    FenCodeGenere fenCodeGenere(code,this);
- //   fenCodeGenere.SetComment(test);
 
+    FenCodeGenere fenCodeGenere(code,this);
     fenCodeGenere.exec();
+
+// une variante pour faire la même chose consiste à faire:
+//    FenCodeGenere *fenetreCode = new FenCodeGenere(code, this);
+//    fenetreCode->exec();
+// mais les nuances ne sont pas encore bien claires en particulier dans quel cas
+// il vaut mieux passer par le pointeur et dans quel cas , il vaut mieux eviter.
 }
 
 

@@ -12,7 +12,11 @@
 class FenCodeGenere : public QDialog // On hérite de QWidget (IMPORTANT)
 {
 
+
+
     public:
+
+    // le &code reste complexe pour moi, je ne suis pas à l'aise avec les réferences.
     FenCodeGenere(QString &code, QWidget *parent);
 
     private:
